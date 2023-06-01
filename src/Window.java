@@ -2,11 +2,16 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Window extends JFrame{
+    JLabel etiket;
     public Window(){
         setTitle("Pencere ismi");
         setBounds(600,400,300,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+        etiket = new JLabel("",SwingConstants.CENTER);
+        etiket.setLocation(200,200);
+        add(etiket);
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -22,13 +27,23 @@ public class Window extends JFrame{
                 formMouseClicked(e);
             }
         });
+
+        addWindowListener(new WindowAdapter(){
+            public void windowOpened(WindowEvent evt){
+                formWindowOpened(evt);
+            }
+        });
     }
     public void formKeyPressed(KeyEvent e) {
-        System.out.println("Basilan Tuş: " + e.getKeyChar());
+        etiket.setText("Basılan tuş: " +e.getKeyChar());
     }
 
-    private void formMouseClicked(MouseEvent e) {
-        System.out.println("Tiklanilan Koordinat: (" +e.getX() + "," +e.getY()+ ")");
+    public void formMouseClicked(MouseEvent e) {
+        etiket.setText("Tiklanilan Koordinat: (" +e.getX() + "," +e.getY()+ ")");
+    }
+
+    public void formWindowOpened(WindowEvent e){
+        etiket.setText("Pencere Boyutu: " +e.getWindow().getSize().width+ " " +e.getWindow().getSize().height);
     }
 
     public static void main(String[] args) {
